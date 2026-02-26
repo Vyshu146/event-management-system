@@ -1,0 +1,163 @@
+<!DOCTYPE html> 
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Available Events - Event Vibe</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #1534df, #2dc3ed, #d517a5, #c0f12b); 
+    /* 135 degrees angle gradient with 4 colors */
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite; /* animated gradient */
+}
+
+@keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+
+       h2 {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 36px;
+    font-weight: bold;
+    font-family: 'Imperial Script', cursive; /* modern, clean font */
+    background: linear-gradient(to right, #ff512f, #dd2476, #f7971e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+
+
+
+
+        .events-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns */
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .event-card {
+            position: relative;
+            height: 300px; /* make cards taller to show full image */
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .event-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* ensures image covers full card */
+            filter: brightness(70%); /* darken image for text visibility */
+        }
+
+        .event-content {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            color: #fff;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5); /* semi-transparent overlay for readability */
+        }
+
+        .event-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .event-description {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .event-info {
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 5px;
+            color: white;
+            background-color: #ff5722;
+        }
+
+        a.button {
+            display: inline-block;
+            margin-top: 8px;
+            background-color: #00c8ff;
+            color: white;
+            padding: 6px 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        a.button:hover {
+            background-color: #6200b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Available Events</h2>
+    <div class="events-container">
+        <div class="event-card" th:each="event : ${events}">
+            <img class="event-image"
+                 th:src="${event.name=='Rock Concert' ? 'https://png.pngtree.com/background/20250316/original/pngtree-close-up-play-electric-guitar-at-a-rock-concert-picture-image_15450234.jpg' :
+                         event.name=='Jazz Night' ? 'https://images.stockcake.com/public/6/d/f/6dfcc94f-01a2-4ce2-a593-990a84c6919e_large/jazz-sax-performance-stockcake.jpg' :
+                         
+                         event.name=='Indie Music Evening' ? 'https://images.radiocity.in/images/uploads/ArijitSinghMain_d.jpg' :
+                         event.name=='Electronic Dance Party' ? 'https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500' :
+                         event.name=='Acoustic Night' ? 'https://img.freepik.com/free-photo/acoustic-guitar-black-background-with-candles_169016-62093.jpg?semt=ais_incoming&w=740&q=80' :
+                         event.name=='Classical Dance Show' ? 'https://e0.pxfuel.com/wallpapers/441/45/desktop-wallpaper-indian-classical-dance-bharatanatyam-indian-thumbnail.jpg' :
+                       
+                         event.name=='Folk Dance Night' ? 'https://t4.ftcdn.net/jpg/16/73/57/57/360_F_1673575792_pi2yFoiYZBnCSGJnIJ4vIP8FodZLynUQ.jpg' :
+                         event.name=='Ballet Evening' ? 'https://images.stockcake.com/public/4/9/b/49b84fa6-1a91-4916-acc5-9f6f61801928_large/ballet-dancer-illuminated-stockcake.jpg' :
+                         event.name=='Contemporary Dance Fest' ? 'https://static.vecteezy.com/system/resources/previews/050/809/008/non_2x/dynamic-dance-performance-in-theater-artistic-performance-in-theater-ambiance-modern-dance-photo.jpeg' :
+                         event.name=='Salsa Night' ? 'https://images.squarespace-cdn.com/content/v1/630b9f840a5f9519c23147f7/1713312855704-0B04YRIHN4K1WS2AM2PK/image-asset.png' :
+                         event.name=='Laugh Riot' ? 'https://washington.org/sites/default/files/54439760925_7d33e0232c_k_4D93F0C3-D2F8-4461-80790A95E3DCA316_8c7af2c8-47af-44e2-87371ae0bc3d455c.jpg' :
+                         event.name=='Comedy Carnival' ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkxkSMYHtcU9h0kMpH3jpENayq1oewgsD42g&s' :
+                         event.name=='Joke Fiesta' ? 'https://t4.ftcdn.net/jpg/02/24/02/15/360_F_224021505_NM04ty2nib5YTQvoHYMOU6ue9jpvg34t.jpg' :
+                         event.name=='Punchline Night' ? 'https://uploads.tickettailorassets.com/c_scale,w_800/v1/production/userfiles/jyjgsdahuddmpukmb0du.jpg?_a=BAACd3DQ' :
+                         event.name=='Humor Fest' ? 'https://img.pikbest.com/png-images/20240916/colorful-holi-a-hindu-familys-fun-filled-festival_10853221.png!sw800' :
+                         event.name=='Giggle Night' ? 'https://img.freepik.com/premium-vector/vector-kids-laughing-cheerfully-with-flat-design-style_995281-46352.jpg' :
+                         event.name=='Comedy Skit Show' ? 'https://c8.alamy.com/comp/KE1JJF/children-doing-stage-drama-illustration-KE1JJF.jpg' :
+                         event.name=='Drama Skit Night' ? 'https://i.pinimg.com/736x/85/c8/17/85c817514fae3d584e1fc0f1802d99a6.jpg' :
+                         event.name=='Improv Comedy Skits' ? 'https://images-platform.99static.com//VRGyl011qcEeRXa_cfrzF8rQDrc=/252x137:860x745/fit-in/590x590/99designs-contests-attachments/16/16576/attachment_16576991' :
+                         event.name=='Street Skit Performance' ? 'https://c8.alamy.com/comp/2H3FM1G/street-theater-culture-entertainment-outdoor-family-art-performance-magician-show-on-stage-for-children-park-festival-vector-illustration-2H3FM1G.jpg' :
+                         event.name=='Political Satire Skits' ? 'https://www.economist.com/cdn-cgi/image/width=1424,quality=80,format=auto/content-assets/images/20230805_USD000.jpg' :
+                         event.name=='School Drama Skits' ? 'https://theaterlove.com/wp-content/uploads/2021/06/plays-for-high-school.jpg' :
+                         '' }"
+                 alt="Event Image">
+            <div class="event-content">
+                <div class="event-name" th:text="${event.name}"></div>
+                <div class="event-description" th:text="${event.description}"></div>
+                <div class="event-info">Date & Time: <span th:text="${#temporals.format(event.dateTime,'yyyy-MM-dd HH:mm')}"></span></div>
+                <div class="event-info">Location: <span th:text="${event.location}"></span></div>
+                <div class="event-info">Available Seats: <span th:text="${event.availableSeats}"></span></div>
+                <div class="category-badge" th:text="${event.category != null ? event.category.name : 'Uncategorized'}"></div>
+                <a th:href="@{'/bookings/new/' + ${event.id}}" class="button">Book</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

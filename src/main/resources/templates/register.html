@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Register - Event Vibe</title>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: url('https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1800&q=80') no-repeat center center/cover;
+      color: #fff;
+      position: relative;
+    }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1;
+    }
+    .quote {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 50px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 50px;
+      background: linear-gradient(90deg, #ff6ee9, #f5e273);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .form-container {
+      position: relative;
+      z-index: 2;
+      width: 450px;
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-radius: 20px;
+      padding: 40px;
+      margin-right: 8%;
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(6px);
+    }
+    h2 {
+      text-align: center;
+      color: #ff4081;
+      margin-bottom: 30px;
+      font-size: 32px;
+      letter-spacing: 1px;
+    }
+    label {
+      display: block;
+      margin: 8px 0 4px;
+      font-weight: 600;
+      font-size: 14px;
+      color: #fff;
+    }
+    input, select {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 18px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+      background: rgba(0, 0, 0, 0.45);
+      color: #fff;
+    }
+    input::placeholder {
+      color: rgba(255,255,255,0.6);
+    }
+    button {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      font-size: 18px;
+      font-weight: 600;
+      background: linear-gradient(135deg, #ff4081, #7c4dff);
+      color: #fff;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+    }
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #7c4dff, #ff4081);
+    }
+
+    /* 🔔 Toast Notification */
+    .toast {
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 300px;
+      max-width: 400px;
+      padding: 16px 25px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      z-index: 9999;
+      box-shadow: 0px 8px 25px rgba(0,0,0,0.35);
+      transition: all 0.5s ease;
+    }
+    .toast.show {
+      opacity: 1;
+    }
+    .toast.success { background: linear-gradient(135deg, #00b09b, #96c93d); }  /* green */
+    .toast.error   { background: linear-gradient(135deg, #ff5f6d, #ffc371); } /* red-orange */
+    .toast.info    { background: linear-gradient(135deg, #2193b0, #6dd5ed); } /* blue */
+    .toast.warning { background: linear-gradient(135deg, #f7971e, #ffd200); } /* yellow */
+    .toast .icon { font-size: 22px; }
+  </style>
+</head>
+<body>
+  <div th:if="${successMessage}" style="color:green; font-weight:bold; text-align:center; margin-bottom:15px;">
+    <p th:text="${successMessage}"></p>
+</div>
+<div th:if="${errorMessage}" style="color:red; font-weight:bold; text-align:center; margin-bottom:15px;">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+  <div class="overlay"></div>
+  
+  <!-- Quote Side -->
+  <div class="quote">
+    ✨ your ultimate place for joy and celebration! ✨
+  </div>
+
+  <!-- Registration Form -->
+  <div class="form-container">
+    <h2>Register Now 🎶</h2>
+    <form th:action="@{/register}" th:object="${user}" method="post">
+      <label>Name</label>
+      <input type="text" th:field="*{name}" placeholder="Enter your name" required />
+
+      <label>Gender</label>
+      <select th:field="*{gender}" required>
+        <option value="" disabled selected>Select your gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label>Phone</label>
+      <input type="text" th:field="*{phone}" placeholder="Enter phone number" required />
+
+      <label>Email</label>
+      <input type="email" th:field="*{email}" placeholder="Enter email" required />
+
+      <label>Password</label>
+      <input type="password" th:field="*{password}" placeholder="Enter password" required />
+
+      <button type="submit">Register Now</button>
+    </form>
+  </div>
+
+  <!-- 🔔 Toast Notification Box -->
+  <div id="toast" class="toast"><span class="icon">✔️</span><span id="toast-msg"></span></div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const successMsg = /*[[${successMessage}]]*/ '';
+      const errorMsg = /*[[${errorMessage}]]*/ '';
+
+      if(successMsg) showToast(successMsg, 'success');
+      if(errorMsg) showToast(errorMsg, 'error');
+    });
+
+    function showToast(message, type="info") {
+      const toast = document.getElementById("toast");
+      const msg = document.getElementById("toast-msg");
+      const icon = toast.querySelector(".icon");
+
+      msg.textContent = message;
+
+      // set icon based on type
+      if(type === "success") icon.textContent = "✔️";
+      else if(type === "error") icon.textContent = "⚠️";
+      else if(type === "warning") icon.textContent = "⚡";
+      else icon.textContent = "ℹ️";
+
+      toast.className = "toast show " + type;
+
+      setTimeout(() => { toast.classList.remove("show"); }, 100000); // 7 seconds visibility
+    }
+  </script>
+
+</body>
+</html>
+

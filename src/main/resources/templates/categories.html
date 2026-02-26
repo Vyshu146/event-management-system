@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Event Categories</title>
+    <!-- Import Italianno font -->
+    <link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Multi-color animated gradient background */
+            background: linear-gradient(135deg, #ff0080, #ff007b, #4d40e0, #ff00ee, #db66ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 90%;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        h2 {
+            font-family: 'Italianno', cursive;
+            font-size: 100px;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #0d0109, #0d0700, #011614);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .event-card {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            height: 400px;
+            margin: 40px auto;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 25px;
+        }
+
+        .content h3 {
+            font-family: 'Italianno', cursive;
+            font-size: 45px;
+            margin-bottom: 16px;
+        }
+
+        .content p {
+            font-size: 20px;
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .content a {
+            padding: 14px 30px;
+            background: #ae0a3e;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 18px;
+            transition: background 0.3s;
+        }
+
+        .content a:hover {
+            background: #e64a19;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>✨ Event Categories 🎶🎤</h2>
+
+    <!-- Music -->
+    <div class="event-card" style="background-image: url('https://images.unsplash.com/photo-1511379938547-c1f69419868d');">
+        <div class="overlay"></div>
+        <div class="content">
+            <h3>Music</h3>
+            <p>"Feel the rhythm, live the melody!"</p>
+            <a th:href="@{'/events/category/' + 1}">Explore Music</a>
+        </div>
+    </div>
+
+    <!-- Dance -->
+    <div class="event-card" style="background-image: url('https://assets.zeezest.com/blogs/PROD_Indian-classical-dance-Banner_1641911745291.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <h3>Dance</h3>
+            <p>"Grace in every step, fire in every move!"</p>
+            <a th:href="@{'/events/category/' + 3}">Explore Dance</a>
+        </div>
+    </div>
+
+    <!-- Stand-up Comedy -->
+    <div class="event-card" style="background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20240706/pngtree-vintage-microphone-in-a-large-stand-up-comedy-venue-image_15862817.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <h3>Stand-up Comedy</h3>
+            <p>"Laughter is the best spotlight!"</p>
+            <a th:href="@{'/events/category/' + 2}">Explore Comedy</a>
+        </div>
+    </div>
+
+    <!-- Skits -->
+    <div class="event-card" style="background-image: url('https://www.euroschoolindia.com/blogs/wp-content/uploads/2023/11/how-to-prepare-skits-jpg.webp');">
+        <div class="overlay"></div>
+        <div class="content">
+            <h3>Skits</h3>
+            <p>"Stories that speak, laughter that stays!"</p>
+            <a th:href="@{'/events/category/' + 4}">Explore Skits</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

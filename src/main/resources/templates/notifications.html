@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Notifications</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #89f7fe, #66a6ff);
+            margin: 0;
+            padding: 30px;
+        }
+        h2 {
+            text-align: center;
+            font-size: 34px;
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+        .notification-box {
+            background: linear-gradient(135deg, #fdfbfb, #ebedee);
+            padding: 20px;
+            margin: 15px auto;
+            border-radius: 15px;
+            max-width: 650px;
+            box-shadow: 0px 6px 15px rgba(0,0,0,0.2);
+            position: relative;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .notification-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.25);
+        }
+        .notification-box::before {
+            content: "🔔";
+            position: absolute;
+            left: -10px;
+            top: -10px;
+            background: #ff6f61;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            font-size: 20px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+        }
+        .message {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        .time {
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+            text-align: right;
+        }
+        .add-btn {
+            display: block;
+            margin: 30px auto;
+            padding: 14px 25px;
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            color: white;
+            border-radius: 50px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+        .add-btn:hover {
+            background: linear-gradient(135deg, #dd2476, #ff512f);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <h2>✨ Event Notifications ✨</h2>
+
+    <div th:each="note : ${notifications}" class="notification-box">
+        <p class="message" th:text="${note.message}"></p>
+        <p class="time" th:text="${#temporals.format(note.createdAt, 'dd MMM yyyy HH:mm')}"></p>
+    </div>
+
+    <!-- Test button to add a sample notification -->
+    <form th:action="@{/notifications/add}" method="post">
+        <button class="add-btn">➕ Add Sample Notification</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Booking Form</title>
+  <style>
+    /* Animated Background */
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: linear-gradient(-45deg, #4353e2, #0e79de, #b41897, #301bd2);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      padding: 40px;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Booking Form */
+    .form-container {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 25px;
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0px 8px 25px rgba(0,0,0,0.2);
+      width: 400px;
+      color: #01090b;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      outline: none;
+      box-sizing: border-box;
+    }
+    input, select {
+      background: rgba(236, 244, 236, 0.717);
+      color: #333;
+    }
+    button {
+      background: linear-gradient(90deg, #3853cb, #c12dbf);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    /* Ticket Design */
+    .ticket {
+      margin-top: 30px;
+      width: 450px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.25);
+      display: none;
+      background: linear-gradient(135deg, #aeb825, #e728ae, #1ea4be);
+      position: relative;
+    }
+    .ticket-header {
+      background: rgba(0,0,0,0.2);
+      color: #fff;
+      padding: 15px;
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      letter-spacing: 1px;
+      border-bottom: 2px dashed rgba(255,255,255,0.5);
+    }
+    .ticket-body {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .ticket-info {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #fff;
+    }
+    .ticket-price {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 10px;
+      color: #ffeaa7;
+    }
+    .qr-placeholder {
+      width: 120px;
+      height: 120px;
+      background: repeating-linear-gradient(
+        45deg,
+        #fff,
+        #fff 10px,
+        #000 10px,
+        #000 20px
+      );
+      border: 3px solid #fff;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 11px;
+      color: #000;
+      font-weight: bold;
+    }
+    .ticket-footer {
+      text-align: center;
+      padding: 15px;
+      background: rgba(0,0,0,0.2);
+      font-size: 16px;
+      font-style: italic;
+      color: #fff;
+      border-top: 2px dashed rgba(255,255,255,0.5);
+    }
+  </style>
+
+  <script>
+    function showTicket(event) {
+      event.preventDefault();
+
+      let name = document.getElementById("name").value;
+      let seats = document.getElementById("seats").value;
+      let showtime = document.getElementById("showtime").value;
+      let payment = document.getElementById("payment").value;
+
+      let pricePerSeat = 200; // fixed price per seat
+      let totalPrice = seats * pricePerSeat;
+
+      document.getElementById("ticketName").innerText = name;
+      document.getElementById("ticketSeats").innerText = seats;
+      document.getElementById("ticketShowtime").innerText = showtime;
+      document.getElementById("ticketPayment").innerText = payment;
+      document.getElementById("ticketPrice").innerText = "₹" + totalPrice;
+
+      document.querySelector(".form-container").style.display = "none";
+      document.querySelector(".ticket").style.display = "block";
+    }
+  </script>
+</head>
+<body>
+    <div th:if="${successMessage}" style="color:rgb(2, 85, 145); font-weight:bold; text-align:center; margin-bottom:15px;">
+    <p th:text="${successMessage}"></p>
+</div>
+<div th:if="${errorMessage}" style="color:rgb(255, 51, 0); font-weight:bold; text-align:center; margin-bottom:15px;">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+  <!-- Booking Form -->
+  <div class="form-container">
+    <h2>🎟️ Book Your Event Ticket</h2>
+    <form id="bookingForm" onsubmit="showTicket(event)">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="seats">Number of Seats</label>
+      <input type="number" id="seats" name="seats" min="1" max="10" required>
+
+      <label for="showtime">Show Time</label>
+      <select id="showtime" name="showtime" required>
+        <option value="">--Select--</option>
+        <option>10:00 AM</option>
+        <option>1:00 PM</option>
+        <option>4:00 PM</option>
+        <option>7:00 PM</option>
+      </select>
+
+      <label for="payment">Payment Method</label>
+      <select id="payment" name="payment" required>
+        <option value="">--Select Payment--</option>
+        <option>UPI</option>
+        <option>Credit Card</option>
+        <option>Debit Card</option>
+        <option>Net Banking</option>
+        <option>Pay at Counter</option>
+      </select>
+
+      <button type="submit">Confirm Booking</button>
+    </form>
+  </div>
+
+  <!-- Ticket -->
+  <div class="ticket">
+    <div class="ticket-header">
+      🎶 Event Ticket
+    </div>
+    <div class="ticket-body">
+      <div class="ticket-info">
+        <p><strong>Name:</strong> <span id="ticketName"></span></p>
+        <p><strong>Seats:</strong> <span id="ticketSeats"></span></p>
+        <p><strong>Show Time:</strong> <span id="ticketShowtime"></span></p>
+        <p><strong>Payment:</strong> <span id="ticketPayment"></span></p>
+        <p class="ticket-price">Total: <span id="ticketPrice"></span></p>
+      </div>
+      <div class="qr-placeholder">QR CODE</div>
+    </div>
+    <div class="ticket-footer">
+      ✨ Enjoy the Show & Make Memories! ✨
+    </div>
+  </div>
+</body>
+</html>
