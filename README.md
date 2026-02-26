@@ -69,6 +69,46 @@ The application follows a layered structure:
 4. Open browser:
 http://localhost:9090
 
+## 📸 Screenshots
+
+### 📝 Registration Page
+<img src="screenshots/register.png" width="700"/>
+
+---
+
+### 📂 Event Categories
+<img src="screenshots/categories.png" width="700"/>
+
+---
+
+### 🎵 Music Category
+<img src="screenshots/music-categories.png" width="700"/>
+
+---
+
+### 💃 Dance Category
+<img src="screenshots/dance-categories.png" width="700"/>
+
+---
+
+### 🎭 Standup Comedy Category
+<img src="screenshots/standup-comedy-categories.png" width="700"/>
+
+---
+
+### 🎬 Skit Category
+<img src="screenshots/skit-categories.png" width="700"/>
+
+---
+
+### 🎟 Booking Event
+<img src="screenshots/booking-event.png" width="700"/>
+
+---
+
+### 🧾 Event Ticket
+<img src="screenshots/event-ticket.png" width="700"/>
+
 ## Author
 Lepakshi Vyshnavi  
 Integrated M-tech-CSE | VIT-AP University
