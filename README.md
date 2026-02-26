@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="screenshots/categories.png" width="800"/>
+</p>
+
 # Event Management System 
 
 ## Overview
